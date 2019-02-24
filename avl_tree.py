@@ -20,10 +20,16 @@ class Node(object):
 
 class AVL_tree(object):
 
-  def get_height():
-
+  def get_height(self, root):
+    if not root:
+      return 0
+    return root.height
 
   def get_balance():
+    if not root:
+      return 0
+    
+    return self.get_height(root.left) - self.get_height(root.right)
 
   def insert():
 
