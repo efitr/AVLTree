@@ -3,7 +3,7 @@
 #############################################
 
 ##### Objectives:
-#####  * Make the AVL data structures
+#####  * Make the AVL tree data structure
 
 ##### What it is?
 #####  * It is a binary tree that both of it's subtrees can't
@@ -66,12 +66,16 @@ class AVL_tree(object):
     #   * Make the right pointer be the node
     #   * 
     #
-    #
+    # NOT COMPLETE
+    '''
     temp = node
     node.right = node
     node.left = temp
-
+    '''
   def right_rotate():
+
+    node.right.right = node
+    node = node.left
 
 
   def insert(self, key, node=None):
@@ -115,18 +119,32 @@ class AVL_tree(object):
 
     # For rotation to happen the balance factor must 
     # be higher than one
+    # There are four possible scenarios for the rotation
     if balance_factor == -2:
       # Here should rotate right
-    if balance factor == 2:
+      node.right_rotate()
+    elif balance factor == 2:
       # Here should rotate left
-
+      node.left_rotate()
 
   def search():
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
     # Expected Space Complexity: O(log(N))
+    # Current Time Complexity: ???
+    # Current Space Complexity: ???
 
+    # Purpose: 
+    #   * Find whatever element 
+
+  def find_smallest_element():
+    pass
+  def find_largest_element():
+    pass
   def remove():
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
     # Expected Space Complexity: O(log(N))
+    # Current Time Complexity: ???
+    # Current Space Complexity: ???
+    pass
