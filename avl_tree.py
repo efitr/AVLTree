@@ -15,17 +15,22 @@
 
 class Node(object):
 
-  def __init__(self, val):
-    self.val = val
+  def __init__(self, value):
+    self.value = value
     self.left = None
     self.right = None
     self.height = 1
 
 class AVL_tree(object):
 
-  def __init__(self):
+  def __init__(self, items=None):
     self.root = None
 
+    if items is not None:
+      for item in items:
+          self.insert(item)
+
+  # Helper functions
   def get_height(self, root):
     # Purpose
     #   * Get the current height of the node you are at
@@ -72,12 +77,29 @@ class AVL_tree(object):
     node.right = node
     node.left = temp
     '''
+  
   def right_rotate():
 
     node.right.right = node
     node = node.left
 
+    # BIG(O)Notation:
+    # Expected Time Complexity: O(log(N))
+    # Expected Space Complexity: O(log(N))
+    # Current Time Complexity: ???
+    # Current Space Complexity: ???
 
+    # Purpose: 
+    #   * Find whatever element 
+
+  def find_smallest_element():
+    # Just move along the node.left property recursively until the node.left is none, return that node value
+    pass
+  
+  def find_largest_element():
+    # Just move along the node.right property recursively until the node.right is none, return that node value
+    pass
+  
   def insert(self, key, node=None):
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
@@ -128,19 +150,7 @@ class AVL_tree(object):
       node.left_rotate()
 
   def search():
-    # BIG(O)Notation:
-    # Expected Time Complexity: O(log(N))
-    # Expected Space Complexity: O(log(N))
-    # Current Time Complexity: ???
-    # Current Space Complexity: ???
 
-    # Purpose: 
-    #   * Find whatever element 
-
-  def find_smallest_element():
-    pass
-  def find_largest_element():
-    pass
   def remove():
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
