@@ -13,8 +13,13 @@
 #####  * The functions that are different are insertion and removal
 #####  
 
+# The difference between a Binary Tree and AVL Tree is that
+# it balances itself, this property comes from the added 
+# properties of the Node Object
+#  * height serves the self balancing feature, this makes sure
+#    that the height does not go further than -2 or 2 in any side
+#    of the tree
 class Node(object):
-
   def __init__(self, value):
     self.value = value
     self.left = None
@@ -22,13 +27,18 @@ class Node(object):
     self.height = 1
 
 class AVLTree(object):
-  
-  def __init__(self, items=None):
-    self.root = None
 
-    if items is not None:
-      for item in items:
-          self.insert(item)
+  def __init__(self, numbers=None):
+    # This is handled at the first call of the function
+    # insert(value, current_node=None)
+    self.root = None
+    # This creates a node since the instantiation of the 
+    # AVL Tree
+    #self.root = Node()
+
+    if numbers is not None:
+      for number in numbers:
+          self.insert_left_or_right_measure_height_(number)
 
   # Helper functions
   def _get_height(self, root):
@@ -37,22 +47,20 @@ class AVLTree(object):
     # Approach
     #   * If it is not at the root position, return 0
     #   * Return the height of the node
-    if not root:
-      return 0
+    # How is this actually working??
+    # if not root:
+    #   return 0
     return root.height
 
-  def _get_balance():
-    # Purpose
-    #   *
-    # Approach
-    #   *
-    if not root:
-      return 0
-    return self.get_height(root.left) - self.get_height(root.right)
+  def _measure_height(self, left_node, right_node):
+    # In the what part of the process this interacts that actually
+
+    # if not root:
+    #   return 0
+    return self._get_height(left_node) - self._get_height(right_node)
   
   # Rotation Helper Functions
-  def _left_rotate(self, node): #Maybe add the right and left node
-    # 
+  def _left_rotate(self, node_right, node_left=None): #Maybe add the right and left node
     # Note:
     #   * This is just moving pointers, focus on that
     # Purpose 
@@ -62,37 +70,22 @@ class AVLTree(object):
     #     pointed at to the left pointing pointer and make that point to the node
     #   * Make the pointer pointing to the node, now point to the sub node on the right 
     #     
+    #### If statement that depending on what conditions do what it's suppose to do
+    #### there happens and double rotation
+    if node_left is not None:
+      
     node.right.left = node
-    node = node.right
+    return node.right
 
-    # Approach 2
-    #   * Make a temporary variable that is the current node
-    #   * Make the right pointer be the node
-    #   * 
-    #
-    # NOT COMPLETE
-    '''
-    temp = node
-    node.right = node
-    node.left = temp
-    '''
-  
+
+
   def _right_rotate(self, node):
 
     node.right.right = node
     node = node.left
 
-    # BIG(O)Notation:
-    # Expected Time Complexity: O(log(N))
-    # Expected Space Complexity: O(log(N))
-    # Current Time Complexity: ???
-    # Current Space Complexity: ???
-
-    # Purpose: 
-    #   * Find whatever element 
-
   # Main Functions
-  def insert(self, value, current_node=None):
+  def insert_left_or_right_measure_height_(self, value, current_node=None):
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
     # Expected Space Complexity: O(log(N))
@@ -127,15 +120,15 @@ class AVLTree(object):
     # Check balance factor (you are using the 
     # height of the node in the left - the one in the right )
     # 
-    balance_factor = node.get_balance()
+    current_height = node._measure_height()
 
     # For rotation to happen the balance factor must 
     # be higher than one
     # There are four possible scenarios for the rotation
-    if balance_factor == -2:
+    if current_height == -2:
       # Here should rotate right
       node.right_rotate()
-    elif balance factor == 2:
+    elif current_height == 2:
       # Here should rotate left
       node.left_rotate()
 
