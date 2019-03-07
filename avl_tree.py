@@ -21,8 +21,8 @@ class Node(object):
     self.right = None
     self.height = 1
 
-class AVL_tree(object):
-
+class AVLTree(object):
+  
   def __init__(self, items=None):
     self.root = None
 
@@ -31,29 +31,28 @@ class AVL_tree(object):
           self.insert(item)
 
   # Helper functions
-  def get_height(self, root):
+  def _get_height(self, root):
     # Purpose
     #   * Get the current height of the node you are at
     # Approach
     #   * If it is not at the root position, return 0
     #   * Return the height of the node
-
     if not root:
       return 0
     return root.height
 
-  def get_balance():
+  def _get_balance():
     # Purpose
     #   *
     # Approach
     #   *
-    
     if not root:
       return 0
-    
     return self.get_height(root.left) - self.get_height(root.right)
   
-  def left_rotate():
+  # Rotation Helper Functions
+  def _left_rotate(self, node): #Maybe add the right and left node
+    # 
     # Note:
     #   * This is just moving pointers, focus on that
     # Purpose 
@@ -78,7 +77,7 @@ class AVL_tree(object):
     node.left = temp
     '''
   
-  def right_rotate():
+  def _right_rotate(self, node):
 
     node.right.right = node
     node = node.left
@@ -92,15 +91,8 @@ class AVL_tree(object):
     # Purpose: 
     #   * Find whatever element 
 
-  def find_smallest_element():
-    # Just move along the node.left property recursively until the node.left is none, return that node value
-    pass
-  
-  def find_largest_element():
-    # Just move along the node.right property recursively until the node.right is none, return that node value
-    pass
-  
-  def insert(self, key, node=None):
+  # Main Functions
+  def insert(self, value, current_node=None):
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
     # Expected Space Complexity: O(log(N))
@@ -122,17 +114,15 @@ class AVL_tree(object):
     # * Shape things to rotate left or right
 
     if self.root == None:
-      self.root = Node(key)
+      self.root = Node(value)
       return root
-    # Do I still need this line of code??
-    if not node:
-      return Node(key)
+
     # Getting the node to it's corresponding position on the 
     # binary search tree (it becomes AVL when you add the rotations)
-    elif key < node.val:
-      node.left = self.insert(key, node.left)
+    elif value < node.value:
+      node.left = self.insert(value, node.left)
     else:
-      node.right = self.insert(key, node.right)
+      node.right = self.insert(value, node.right)
 
     # Check balance factor (you are using the 
     # height of the node in the left - the one in the right )
@@ -150,11 +140,41 @@ class AVL_tree(object):
       node.left_rotate()
 
   def search():
+    """Insert the given item in order into this binary search tree.
+    TODO: Best case running time: ??? under what conditions?
+    TODO: Worst case running time: ??? under what conditions?"""
+    # Handle the case where the tree is empty
+    if self.is_empty():
+      # TODO: Create a new root node
+      self.root = Node(item)
+      # TODO: Increase the tree size
+      self.size += 1
+      return
+    # Find the parent node of where the given item should be inserted
+    parent = self._find_parent_node_recursive(item, self.root)
+    # TODO: Check if the given item should be inserted left of parent node
+    if ...:
+      # TODO: Create a new node and set the parent's left child
+      parent.left = ...
+    # TODO: Check if the given item should be inserted right of parent node
+    elif ...:
+      # TODO: Create a new node and set the parent's right child
+      parent.right = ...
+    # TODO: Increase the tree size
+    self.size +=1
 
-  def remove():
+  def deletion():
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
     # Expected Space Complexity: O(log(N))
     # Current Time Complexity: ???
     # Current Space Complexity: ???
+    pass
+
+  def find_smallest_element():
+    # Just move along the node.left property recursively until the node.left is none, return that node value
+    pass
+  
+  def find_largest_element():
+    # Just move along the node.right property recursively until the node.right is none, return that node value
     pass
