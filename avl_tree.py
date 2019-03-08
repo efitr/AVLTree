@@ -20,8 +20,8 @@
 #    that the height does not go further than -2 or 2 in any side
 #    of the tree
 class Node(object):
-  def __init__(self, value):
-    self.value = value
+  def __init__(self, number):
+    self.number = number
     self.left = None
     self.right = None
     self.height = 1
@@ -32,13 +32,11 @@ class AVLTree(object):
     # This is handled at the first call of the function
     # insert(value, current_node=None)
     self.root = None
-    # This creates a node since the instantiation of the 
-    # AVL Tree
-    #self.root = Node()
+    self.size = 0
 
     if numbers is not None:
       for number in numbers:
-          self.insert_left_or_right_measure_height_(number)
+          self.insert_left_or_right_measure_height_rotate_maybe(number)
 
   # Helper functions
   def _get_height(self, root):
@@ -73,19 +71,21 @@ class AVLTree(object):
     #### If statement that depending on what conditions do what it's suppose to do
     #### there happens and double rotation
     if node_left is not None:
-      
+      #Whatever is needed for the extra rotation
+      continue
     node.right.left = node
     return node.right
 
 
 
-  def _right_rotate(self, node):
-
+  def _right_rotate(self, node_left, node_right=None):
+    if node_right is not None:
+      continue
     node.right.right = node
     node = node.left
 
   # Main Functions
-  def insert_left_or_right_measure_height_(self, value, current_node=None):
+  def insert_left_or_right_measure_height_rotate_maybe(self, number, current_node=None):
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
     # Expected Space Complexity: O(log(N))
@@ -106,16 +106,17 @@ class AVLTree(object):
     # * Get the balance factor
     # * Shape things to rotate left or right
 
+    # This will only happen under one circunstace, it's when you have
+    # not add any node at all, first number becomes the root
     if self.root == None:
-      self.root = Node(value)
-      return root
+      self.root = Node(number)
+      return self.root
 
-    # Getting the node to it's corresponding position on the 
-    # binary search tree (it becomes AVL when you add the rotations)
-    elif value < node.value:
-      node.left = self.insert(value, node.left)
+    # 
+    elif number < node.number:
+      node.left = self.insert_left_or_right_measure_height_rotate_maybe(number, node.left)
     else:
-      node.right = self.insert(value, node.right)
+      node.right = self.insert_left_or_right_measure_height_rotate_maybe(number, node.right)
 
     # Check balance factor (you are using the 
     # height of the node in the left - the one in the right )
