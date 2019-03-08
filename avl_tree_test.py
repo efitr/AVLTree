@@ -37,7 +37,8 @@ class AVLNodeTest(unittest.TestCase):
 
 class TestAVLTree(unittest.TestCase):
 
-    def test_insert_left_or_right_measure_rule_rotate_maybe(self):
+    # dictionary_for_test = {'test_insert_left_or_right_measure_rule_rotate_maybe': 'insert'}   
+    def test_insert_without_rotations(self):
         numbers = [1, 2, 3]
         avlTree = AVLTree(numbers)
         assert avlTree.root.number == 1
@@ -48,23 +49,49 @@ class TestAVLTree(unittest.TestCase):
         assert avlTree.root.left.height = 2
         assert avlTree.root.right.height = 2
 
-
+    def test_insert_with_left_left_rotation(self):
+        number = [10, 5, 1]
+        avlTree = AVLTree(numbers)
+        assert avlTree.root.number == 5
+        assert avlTree.root.left.number == 1
+        assert avlTree.root.left.number == 10
         
+        assert avlTree.root.height = 1
+        assert avlTree.root.left.height = 2
+        assert avlTree.root.right.height = 2
+        
+    def test_insert_with_left_right_rotation(self):
+        number = [10, 1, 5]
+        avlTree = AVLTree(numbers)
+        assert avlTree.root.number == 5
+        assert avlTree.root.left.number == 1
+        assert avlTree.root.left.number == 10
+        
+        assert avlTree.root.height = 1
+        assert avlTree.root.left.height = 2
+        assert avlTree.root.right.height = 2
 
-#     def test_rotations(self):
+    def test_insert_with_left_left_rotation(self):
+        number = [10, 14, 20]
+        avlTree = AVLTree(numbers)
+        assert avlTree.root.number == 14
+        assert avlTree.root.left.number == 10
+        assert avlTree.root.left.number == 20
+        
+        assert avlTree.root.height = 1
+        assert avlTree.root.left.height = 2
+        assert avlTree.root.right.height = 2
 
-#     def test_rotations(self):
-
-#     def test_rotations(self):
-
-#     def test_rotations(self):
-
-#     def test_balance_factor(self):
-
-#     def test_contains(self):
-    
-#     def test_search(self):
-
+    def test_insert_with_left_left_rotation(self):
+        number = [14, 20, 16]
+        avlTree = AVLTree(numbers)
+        assert avlTree.root.number == 16
+        assert avlTree.root.left.number == 14
+        assert avlTree.root.left.number == 20
+        
+        assert avlTree.root.height = 1
+        assert avlTree.root.left.height = 2
+        assert avlTree.root.right.height = 2
 
 if __name__ == '__main__':
     unittest.main()
