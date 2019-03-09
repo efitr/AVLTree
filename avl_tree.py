@@ -35,12 +35,12 @@ class Node(object):
     # Check if left child has a value and if so calculate its height
     height_left_pointer_until_leaf = 0
     if self.left is not None:
-        height_left_pointer_until_leaf = self.left.height() + 1
+      height_left_pointer_until_leaf = self.left.height + 1
     
     # Check if right child has a value and if so calculate its height
     height_right_pointer_until_leaf = 0
     if self.right is not None:
-        height_right_pointer_until_leaf = self.right.height() + 1
+      height_right_pointer_until_leaf = self.right.height + 1
 
     return height_left_pointer_until_leaf, height_right_pointer_until_leaf
 
@@ -52,7 +52,7 @@ class AVLTree(object):
 
     if numbers is not None:
       for number in numbers:
-          self.insert_left_or_right_measure_rule_rotate_maybe(number)
+          self.insert(number)
 
   def _measure_balance_rule(self, node):
 
@@ -60,9 +60,9 @@ class AVLTree(object):
     return left_node_height - right_node_height
   
   # Rotation Helper Functions
-  def _left_rotate(self, node_right, node_left=None): #Maybe add the right and left node
+  def _left_rotate(self, node, left_side_=False): #Maybe add the right and left node
 
-    if node_left is not None:
+    if left_side_ is not False:
       #Whatever is needed for the extra rotation
       node.left = node.left.right
       node.left.right.left = node.left
@@ -70,8 +70,9 @@ class AVLTree(object):
     node.left = node
     node = node.left.right
 
-  def _right_rotate(self, node_left, node_right=None):
-    if node_right is not None:
+  def _right_rotate(self, node, right_side_=False):
+    
+    if right_side_ is not False:
       node.right.left = node.right
       node.right = node.right.left.right
 
@@ -79,7 +80,48 @@ class AVLTree(object):
     node = node.right
 
   # Main Functions
-  def insert_left_or_right_measure_rule_rotate_maybe(self, number, current_node=None):
+  def insert(self, number, node=None):
+    if self.root == None:
+      self.root = Node(number)  
+      return
+    
+    if node == None:
+      node = self.root
+    
+    if number < node.number:
+      if node.left == None:
+        new_node = Node(number)
+        node.left = new_node
+      self.insert(number, node.left)
+    else:
+      if node.right == None:
+        new_node = Node(number)
+        node.right = new_node
+
+      self.insert(number, node.right)
+
+    left_height, right_height = node._get_height()
+    
+    node.height = max(left_height, right_height)
+    # Check balance factor (you are using the 
+    # height of the node in the left - the one in the right )
+    # 
+    height_difference = self._measure_balance_rule(node)
+
+    # For rotation to happen the balance factor must 
+    # be higher than one
+    # There are four possible scenarios for the rotation
+    if height_difference <= -2:
+      # Here should roate right
+      node._left_rotate()
+    elif height_difference >= 2:
+      # Here should rotate left
+      node._right_rotate()
+
+
+
+
+
     # BIG(O)Notation:
     # Expected Time Complexity: O(log(N))
     # Expected Space Complexity: O(log(N))
@@ -102,28 +144,3 @@ class AVLTree(object):
 
     # This will only happen under one circunstace, it's when you have
     # not add any node at all, first number becomes the root
-    if self.root == None:
-      self.root = Node(number)
-      return self.root
-
-    # 
-    elif number < node.number:
-      node.left = self.insert_left_or_right_measure_height_rotate_maybe(number, node.left)
-    else:
-      node.right = self.insert_left_or_right_measure_height_rotate_maybe(number, node.right)
-
-    # Check balance factor (you are using the 
-    # height of the node in the left - the one in the right )
-    # 
-    current_height = self._measure_balance_rule(node)
-
-    # For rotation to happen the balance factor must 
-    # be higher than one
-    # There are four possible scenarios for the rotation
-    if current_height == -2:
-      # Here should rotate right
-      node._left_rotate()
-    elif current_height == 2:
-      # Here should rotate left
-      node._right_rotate()
-
