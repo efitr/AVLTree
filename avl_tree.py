@@ -32,6 +32,8 @@ class Node(object):
     TODO: Best and worst case running time: ??? under what conditions?"""
     # TODO: Check if root node has a value and if so calculate its height
 
+    # Is this actually working?, 
+
     # Check if left child has a value and if so calculate its height
     height_left_pointer_until_leaf = 0
     if self.left is not None:
@@ -54,8 +56,10 @@ class AVLTree(object):
       for number in numbers:
           self.insert(number)
 
+  # Do I actually need this, maybe just not make this call height, it can just make things more
+  # syntactically explanation
   def _measure_balance_rule(self, node):
-
+    # The get height shouldnt happen
     left_node_height, right_node_height = node._get_height()
     return left_node_height - right_node_height
   
@@ -81,6 +85,7 @@ class AVLTree(object):
 
   # Main Functions
   def insert(self, number, node=None):
+
     if self.root == None:
       self.root = Node(number)  
       return
@@ -92,7 +97,9 @@ class AVLTree(object):
       if node.left == None:
         new_node = Node(number)
         node.left = new_node
+
       self.insert(number, node.left)
+
     else:
       if node.right == None:
         new_node = Node(number)
@@ -106,14 +113,17 @@ class AVLTree(object):
     # Check balance factor (you are using the 
     # height of the node in the left - the one in the right )
     # 
+    # Remenber that measure balance does too much, get height 
     height_difference = self._measure_balance_rule(node)
+
+
 
     # For rotation to happen the balance factor must 
     # be higher than one
     # There are four possible scenarios for the rotation
     if height_difference <= -2:
       # Here should roate right
-      node._left_rotate()
+      node._left_rotate() # This requires two variables, one is a node and the other 
     elif height_difference >= 2:
       # Here should rotate left
       node._right_rotate()
